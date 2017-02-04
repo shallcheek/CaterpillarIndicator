@@ -23,7 +23,7 @@ import java.util.List;
 
 
 public class CaterpillarIndicator extends LinearLayout implements View.OnClickListener, ViewPager.OnPageChangeListener {
-    private static final String TAG = "SlideViewPageTitleBar";
+    private static final String TAG = "CaterpillarIndicator";
 
     private static final int BASE_ID = 0xffff00;
     private static final int FOOTER_COLOR = 0xFFFFC445;
