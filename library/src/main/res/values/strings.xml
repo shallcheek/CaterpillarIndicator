@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CaterpillarIndicator</string>
+
+    <declare-styleable name="CaterpillarIndicator">
+        <attr name="slide_text_color" format="color|reference" />
+        <attr name="slide_text_size_normal" format="dimension" />
+        <attr name="slide_text_size_selected" format="dimension" />
+        <attr name="slide_text_color_normal" format="color" />
+        <attr name="slide_text_color_selected" format="color" />
+        <attr name="slide_footer_line_height" format="dimension" />
+        <attr name="slide_footer_color" format="color" />
+        <attr name="slide_round" format="boolean" />
+        <attr name="slide_item_width" format="dimension" />
+        <attr name="slide_caterpillar" format="boolean" />
+        <attr name="slide_count" format="integer" />
+    </declare-styleable>
+</resources>
