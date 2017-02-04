@@ -15,6 +15,6 @@ public class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return View.inflate(getContext(), com.chaek.example.R.layout.base_view, null);
+        return View.inflate(getContext(),  R.layout.base_view, null);
     }
 }

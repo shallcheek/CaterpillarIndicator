@@ -24,12 +24,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.chaek.example.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
 
-        titleBar = (CaterpillarIndicator) findViewById(com.chaek.example.R.id.title_bar);
-        viewpage = (ViewPager) findViewById(com.chaek.example.R.id.viewpage);
-
+        titleBar = (CaterpillarIndicator) findViewById(R.id.title_bar);
+        viewpage = (ViewPager) findViewById(R.id.viewpage);
 
         fragmentList.add(new BaseFragment());
         fragmentList.add(new BaseFragment());
