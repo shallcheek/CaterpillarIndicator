@@ -29,7 +29,7 @@ dependencies{
 ##Demo
 
 
-<img src="img/1.gif" width="40%"><img>
+<img src="./img/1.gif" width="40%"><img>
 
  
  
