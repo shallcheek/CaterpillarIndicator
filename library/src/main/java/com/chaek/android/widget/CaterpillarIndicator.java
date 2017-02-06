@@ -1,4 +1,4 @@
-package com.cheek.android.widget;
+package com.chaek.android.widget;
 
 import android.content.Context;
 import android.content.res.Resources;

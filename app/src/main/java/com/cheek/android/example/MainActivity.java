@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.cheek.android.widget.CaterpillarIndicator;
+import com.chaek.android.widget.CaterpillarIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 //                titleBar.setTextColorSelected(getResources().getColor(R.color.colorPrimary));
             }
         });
-
         List<CaterpillarIndicator.TitleInfo> titleInfos = new ArrayList<>();
         titleInfos.add(new CaterpillarIndicator.TitleInfo("热门"));
         titleInfos.add(new CaterpillarIndicator.TitleInfo("榜单"));
