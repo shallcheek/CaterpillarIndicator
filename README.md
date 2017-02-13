@@ -4,7 +4,7 @@
 
 ##XML
 ```xml
- <com.cheek.android.widget.CaterpillarIndicator
+ <com.chaek.android.widget.CaterpillarIndicator
     android:id="@+id/title_bar"
     android:layout_width="match_parent"
     android:layout_height="44dp"
