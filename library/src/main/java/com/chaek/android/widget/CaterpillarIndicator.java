@@ -16,10 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.chaek.android.R;
+import com.chaek.android.caterpillarindicator.R;
 
 import java.util.List;
-
 
 
 public class CaterpillarIndicator extends LinearLayout implements View.OnClickListener, ViewPager.OnPageChangeListener {
@@ -302,13 +301,17 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
      */
     public void init(int startPos, List<TitleInfo> tabs, ViewPager mViewPager) {
         removeAllViews();
+        this.mSelectedTab = startPos;
         this.mViewPager = mViewPager;
         this.mViewPager.addOnPageChangeListener(this);
         this.mTitles = tabs;
         this.mItemCount = tabs.size();
         setWeightSum(mItemCount);
+        if (mSelectedTab > tabs.size()) {
+            mSelectedTab = tabs.size();
+        }
         for (int i = 0; i < mItemCount; i++) {
-            add(tabs.get(i).getName());
+            add(tabs.get(i).getName(), i);
         }
         mViewPager.setCurrentItem(startPos);
         invalidate();
@@ -316,14 +319,13 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
     }
 
 
-    protected void add(String label) {
+    protected void add(String label, int i) {
         TextView view = new TextView(getContext());
         LinearLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         view.setGravity(Gravity.CENTER);
         view.setLayoutParams(params);
         view.setText(label);
-        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSizeNormal);
-        view.setTextColor(mTextColorNormal);
+        setTabTextSize(view, i == mSelectedTab);
         view.setId(BASE_ID + (mCurrID++));
         view.setOnClickListener(this);
         addView(view);

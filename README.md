@@ -1,6 +1,12 @@
 # CaterpillarIndicator
 类似毛毛虫爬动的ViewPage指示器,参考新浪微博滑动效果实现
  
+##Gradle
+```java
+dependencies{
+  compile 'com.chaek.android:caterpillarindicator:1.1.0'
+}
+```
 
 ##XML
 ```xml
