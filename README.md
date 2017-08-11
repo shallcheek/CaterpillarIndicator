@@ -1,14 +1,14 @@
 # CaterpillarIndicator
 类似毛毛虫爬动的ViewPage指示器,参考新浪微博滑动效果实现
  
-##Gradle
+## Gradle
 ```java
 dependencies{
   compile 'com.chaek.android:caterpillarindicator:1.2.0'
 }
 ```
 
-##XML
+## XML
 ```xml
    <com.chaek.android.widget.CaterpillarIndicator
          android:id="@+id/title_bar"
@@ -27,7 +27,7 @@ dependencies{
          app:slide_round="true" />   
          
 ```
-##Demo
+## Demo
 
 
 <img src="./img/1.gif" width="40%"><img>
