@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.chaek.android.caterpillarindicator.R;
 
 import java.util.List;
@@ -28,6 +27,8 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
     private static final int FOOTER_COLOR = 0xFFFFC445;
     private static final int ITEM_TEXT_COLOR_NORMAL = 0xFF999999;
     private static final int ITEM_TEXT_COLOR_SELECT = 0xFFFFC445;
+    private static final int TEXT_CENTER = 0;
+    private static final int LINE_CENTER = 1;
 
     private boolean isRoundRectangleLine = true;
     private boolean isCaterpillar = true;
@@ -42,13 +43,11 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
      * item count
      */
     private int mItemCount = 0;
+    private int textCenterFlag;
     private int mCurrentScroll = 0;
     private int mSelectedTab = 0;
+    private int linePaddingBottom = 0;
     private boolean isNewClick;
-    /**
-     * item view id index
-     */
-    private int mCurrID = 0;
     private List<TitleInfo> mTitles;
     private ViewPager mViewPager;
     /**
@@ -82,6 +81,8 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
         isCaterpillar = a.getBoolean(R.styleable.CaterpillarIndicator_slide_caterpillar, true);
         isRoundRectangleLine = a.getBoolean(R.styleable.CaterpillarIndicator_slide_round, true);
         mItemLineWidth = (int) a.getDimension(R.styleable.CaterpillarIndicator_slide_item_width, dip2px(24));
+        linePaddingBottom = (int) a.getDimension(R.styleable.CaterpillarIndicator_slide_padding_bottom, 0);
+        textCenterFlag = a.getInt(R.styleable.CaterpillarIndicator_slide_text_center_flag, TEXT_CENTER);
 
         setWillNotDraw(false);
         initDraw();
@@ -96,6 +97,16 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
      */
     public void setFooterLineHeight(int mFooterLineHeight) {
         this.mFooterLineHeight = dip2px(mFooterLineHeight);
+        invalidate();
+    }
+
+    public void setLinePaddingBottom(int paddingBottom) {
+        this.linePaddingBottom = paddingBottom;
+        invalidate();
+    }
+
+    public void setTextCenterFlag(int centerFlag) {
+        this.textCenterFlag = centerFlag;
         invalidate();
     }
 
@@ -266,7 +277,7 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
             rightX = (mSelectedTab) * cursorWidth + scroll_x + mItemRight;
 
         }
-        float bottomY = getHeight();
+        float bottomY = getHeight() - linePaddingBottom;
         //set foot line height
         float topY = bottomY - mFooterLineHeight;
 
@@ -295,13 +306,13 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
     /**
      * init indication
      *
-     * @param startPos   init select pos
-     * @param tabs       title list
-     * @param mViewPager ViewPage
+     * @param startPosition init select pos
+     * @param tabs          title list
+     * @param mViewPager    ViewPage
      */
-    public void init(int startPos, List<TitleInfo> tabs, ViewPager mViewPager) {
+    public void init(int startPosition, List<TitleInfo> tabs, ViewPager mViewPager) {
         removeAllViews();
-        this.mSelectedTab = startPos;
+        this.mSelectedTab = startPosition;
         this.mViewPager = mViewPager;
         this.mViewPager.addOnPageChangeListener(this);
         this.mTitles = tabs;
@@ -313,20 +324,23 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
         for (int i = 0; i < mItemCount; i++) {
             add(tabs.get(i).getName(), i);
         }
-        mViewPager.setCurrentItem(startPos);
+        mViewPager.setCurrentItem(mSelectedTab);
         invalidate();
         requestLayout();
     }
 
 
-    protected void add(String label, int i) {
+    protected void add(String label, int position) {
         TextView view = new TextView(getContext());
         LinearLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         view.setGravity(Gravity.CENTER);
         view.setLayoutParams(params);
+        if (textCenterFlag == LINE_CENTER) {
+            view.setPadding(0, 0, 0, linePaddingBottom);
+        }
         view.setText(label);
-        setTabTextSize(view, i == mSelectedTab);
-        view.setId(BASE_ID + (mCurrID++));
+        setTabTextSize(view, position == mSelectedTab);
+        view.setId(BASE_ID + position);
         view.setOnClickListener(this);
         addView(view);
     }

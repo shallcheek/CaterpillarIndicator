@@ -13,5 +13,11 @@
         <attr name="slide_item_width" format="dimension" />
         <attr name="slide_caterpillar" format="boolean" />
         <attr name="slide_count" format="integer" />
+        <attr name="slide_padding_bottom" format="dimension" />
+        <attr name="slide_text_center_flag">
+            <enum name="textCenter" value="0" />
+            <enum name="lineCenter" value="1" />
+        </attr>
+
     </declare-styleable>
 </resources>
