@@ -6,8 +6,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.ArrayRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.chaek.android.caterpillarindicator.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,6 +49,7 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
     private int textCenterFlag;
     private int mCurrentScroll = 0;
     private int mSelectedTab = 0;
+    private int mOldSelectPosition = 0;
     private int linePaddingBottom = 0;
     private boolean isNewClick;
     private List<TitleInfo> mTitles;
@@ -62,6 +66,7 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
      * line RectF
      */
     private RectF drawLineRect;
+    private int endCount;
 
 
     public CaterpillarIndicator(Context context) {
@@ -155,9 +160,11 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
         onSwitched(position);
     }
 
+    private int viewPageState;
+
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        viewPageState = state;
     }
 
     public void setFootLineColor(int mFootLineColor) {
@@ -219,10 +226,6 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (isNewClick) {
-            isNewClick = false;
-            return;
-        }
 
         float scroll_x;
         int cursorWidth;
@@ -245,17 +248,20 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
             mItemRight = cursorWidth;
         }
 
-        float leftX;
-        float rightX;
+        float leftX = 0f;
+        float rightX = 0f;
+
 
         boolean isHalf = Math.abs(scroll_x) < (cursorWidth / 2);
         mPaintFooterLine.setColor(mFootLineColor);
-        if (isCaterpillar) {
+        Log.d(TAG, "onDraw:scroll_x " + scroll_x + "," + mCurrentScroll);
+        if (isCaterpillar && !isNewClick) {
             if (scroll_x < 0) {
                 if (isHalf) {
                     leftX = (mSelectedTab) * cursorWidth + scroll_x * 2 + mItemLeft;
                     rightX = (mSelectedTab) * cursorWidth + mItemRight;
                 } else {
+                    //点击
                     leftX = (mSelectedTab - 1) * cursorWidth + mItemLeft;
                     rightX = (mSelectedTab) * cursorWidth + mItemRight + (scroll_x + (cursorWidth / 2)) * 2;
                 }
@@ -267,7 +273,6 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
                     leftX = mSelectedTab * cursorWidth + mItemLeft + (scroll_x - (cursorWidth / 2)) * 2;
                     rightX = (mSelectedTab + 1) * cursorWidth + mItemRight;
                 }
-
             } else {
                 leftX = mSelectedTab * cursorWidth + mItemLeft;
                 rightX = mSelectedTab * cursorWidth + mItemRight;
@@ -288,7 +293,19 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
 
         int roundXY = isRoundRectangleLine ? (mFooterLineHeight / 2) : 0;
         canvas.drawRoundRect(drawLineRect, roundXY, roundXY, mPaintFooterLine);
+        restIsNewClick(scroll_x);
     }
+
+    private void restIsNewClick(float scroll_x) {
+        if (scroll_x == 0 && isNewClick) {
+            endCount++;
+            if (endCount >= 2) {
+                endCount = 0;
+                isNewClick = false;
+            }
+        }
+    }
+
 
     private void onScrolled(int h) {
         mCurrentScroll = h;
@@ -328,7 +345,50 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
         invalidate();
         requestLayout();
     }
+    public void initTitle(ViewPager mViewPager, List<String> list) {
+        int len = list.size();
+        List<TitleInfo> tabs = new ArrayList<>();
+        if (len > 0) {
+            for (String aList : list) {
+                tabs.add(new TitleInfo(aList));
+            }
+        }
+        init(0, tabs, mViewPager);
+    }
 
+    public void initTitle(ViewPager mViewPager, String... list) {
+        int len = list.length;
+        List<TitleInfo> tabs = new ArrayList<>();
+        if (len > 0) {
+            for (String aList : list) {
+                tabs.add(new TitleInfo(aList));
+            }
+        }
+        init(mViewPager.getCurrentItem(), tabs, mViewPager);
+    }
+
+    public void initTitle(ViewPager mViewPager, @ArrayRes int titleList) {
+        String[] list = getResources().getStringArray(titleList);
+        int len = list.length;
+        List<TitleInfo> tabs = new ArrayList<>();
+        if (len > 0) {
+            for (String aList : list) {
+                tabs.add(new TitleInfo(aList));
+            }
+        }
+        init(mViewPager.getCurrentItem(), tabs, mViewPager);
+    }
+
+    public void initTitle(ViewPager mViewPager, int... list) {
+        int len = list.length;
+        List<TitleInfo> tabs = new ArrayList<>();
+        if (len > 0) {
+            for (int aList : list) {
+                tabs.add(new TitleInfo(getContext().getString(aList)));
+            }
+        }
+        init(mViewPager.getCurrentItem(), tabs, mViewPager);
+    }
 
     protected void add(String label, int position) {
         TextView view = new TextView(getContext());
@@ -349,7 +409,8 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
     public void onClick(View v) {
         int position = v.getId() - BASE_ID;
         isNewClick = true;
-        mViewPager.setCurrentItem(position, true);
+        setCurrentTab(position);
+        mViewPager.setCurrentItem(position);
     }
 
     /**
@@ -370,7 +431,7 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
             oldTab.setSelected(false);
             setTabTextSize(oldTab, false);
         }
-
+        mOldSelectPosition = mSelectedTab;
         mSelectedTab = index;
         View newTab = getChildAt(mSelectedTab);
         if (newTab != null) {

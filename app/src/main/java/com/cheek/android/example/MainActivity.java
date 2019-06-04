@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentList.add(new BaseFragment());
         fragmentList.add(new BaseFragment());
-//        fragmentList.add(new BaseFragment());
-//        fragmentList.add(new BaseFragment());
+        fragmentList.add(new BaseFragment());
+        fragmentList.add(new BaseFragment());
         BaseFragmentAdapter adapter = new BaseFragmentAdapter(getSupportFragmentManager());
         viewpage.setAdapter(adapter);
         viewpage.setOnClickListener(new View.OnClickListener() {
@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         List<CaterpillarIndicator.TitleInfo> titleInfos = new ArrayList<>();
         titleInfos.add(new CaterpillarIndicator.TitleInfo("热门"));
         titleInfos.add(new CaterpillarIndicator.TitleInfo("榜单"));
-//        titleInfos.add(new CaterpillarIndicator.TitleInfo("视频"));
-//        titleInfos.add(new CaterpillarIndicator.TitleInfo("头条"));
+        titleInfos.add(new CaterpillarIndicator.TitleInfo("视频"));
+        titleInfos.add(new CaterpillarIndicator.TitleInfo("头条"));
         titleBar.init(1, titleInfos, viewpage);
 
 //        titleBar.setFooterLineHeight(3);
