@@ -260,6 +260,8 @@ public class CaterpillarIndicator extends LinearLayout implements View.OnClickLi
         }
 
         int cursorWidth = getWidth() / mItemCount;
+        this.mItemLineWidth = mItemLineWidth > cursorWidth ? cursorWidth : mItemLineWidth;
+
         startLeft = cursorWidth * startPosition + (cursorWidth - mItemLineWidth) / 2;
         startRight = startLeft + mItemLineWidth;
         targetLeft = cursorWidth * newPosition + (cursorWidth - mItemLineWidth) / 2;
