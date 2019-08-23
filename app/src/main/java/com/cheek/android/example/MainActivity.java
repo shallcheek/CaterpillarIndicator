@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         titleInfos.add(new CaterpillarIndicator.TitleInfo("榜单"));
         titleInfos.add(new CaterpillarIndicator.TitleInfo("视频"));
         titleInfos.add(new CaterpillarIndicator.TitleInfo("头条"));
-        titleBar.init(1, titleInfos, viewpage);
+        titleBar.init(0, titleInfos, viewpage);
 
 //        titleBar.setFooterLineHeight(3);
 //        titleBar.setItemLineWidth(40);
