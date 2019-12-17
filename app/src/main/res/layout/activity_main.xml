@@ -18,14 +18,17 @@
         app:slide_item_width="40dp"
         app:slide_caterpillar="false"
         app:slide_footer_color="#fc9001"
-        app:slide_text_size_normal="17sp"
-        app:slide_text_size_selected="18sp"
-        app:slide_footer_line_height="3dp"
-        app:slide_padding_bottom="4dp"
+        app:slide_text_size_normal="12sp"
+        app:slide_text_size_selected="22sp"
+        app:slide_text_color_selected="#000000"
+        app:slide_text_font="normal"
+        app:slide_text_color_normal="#333333"
+        app:slide_footer_line_height="6dp"
+        app:slide_padding_bottom="13dp"
         app:slide_text_center_flag="textCenter"
         app:slide_round="true" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpage"
         android:layout_width="match_parent"
         android:background="#eeeeee"

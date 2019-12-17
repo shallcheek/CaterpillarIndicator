@@ -18,6 +18,11 @@
             <enum name="textCenter" value="0" />
             <enum name="lineCenter" value="1" />
         </attr>
+        <attr name="slide_text_font">
+            <enum name="normal" value="0" />
+            <enum name="selectBold" value="1" />
+            <enum name="allBold" value="2" />
+        </attr>
 
     </declare-styleable>
 </resources>
