@@ -24,16 +24,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-//    compile 'com.chaek.android:caterpillarindicator:1.2.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    testCompile 'junit:junit:4.12'
-    implementation project(path: ':library')
-    implementation "androidx.core:core-ktx:+"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.chaek.android:caterpillarindicator:1.3.0'
+
+    testImplementation 'junit:junit:4.12'
+//    implementation project(path: ':library')
+    implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }

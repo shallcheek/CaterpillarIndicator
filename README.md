@@ -3,9 +3,9 @@
  
 ## Gradle
 ```java
-dependencies{
-  compile 'com.chaek.android:caterpillarindicator:1.2.0'
-}
+ dependencies{
+  implementation 'com.chaek.android:caterpillarindicator:1.3.0'
+ }
 ```
 
 ## XML
